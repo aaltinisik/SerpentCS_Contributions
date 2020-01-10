@@ -1,5 +1,5 @@
-# -*- coding: utf-8 -*-
 # See LICENSE file for full copyright and licensing details.
+
 from odoo import fields, models, api
 
 
@@ -12,6 +12,7 @@ class SecurityDialog(models.Model):
     @api.multi
     def check_security(self, vals):
         fields = vals.get('field').encode('ascii', 'ignore')
+        fields = fields.decode('utf-8')
         result = self.search_read(
             [('id', '=', vals.get('companyId'))],
             [fields])

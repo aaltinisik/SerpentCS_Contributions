@@ -1,8 +1,7 @@
-# -*- coding: utf-8 -*-
-# Part of Odoo. See LICENSE file for full copyright and licensing details.
+# See LICENSE file for full copyright and licensing details.
 
-from odoo import models, api, _
-from odoo.exceptions import Warning
+from odoo import api, models, _
+from odoo.exceptions import UserError
 
 
 class SaleOrder(models.Model):
@@ -17,5 +16,5 @@ class SaleOrder(models.Model):
             message = _("Please specify unit price for "
                         "the following products:") + '\n'
             message += '\n'.join(map(str, zero_price))
-            raise Warning(message.rstrip())
+            raise UserError(message.rstrip())
         return super(SaleOrder, self).action_confirm()

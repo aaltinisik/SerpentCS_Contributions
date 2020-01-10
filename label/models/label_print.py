@@ -1,12 +1,13 @@
-# -*- coding: utf-8 -*-
-# Part of Odoo. See LICENSE file for full copyright and licensing details.
+# See LICENSE file for full copyright and licensing details.
 
-# 1:  imports of odoo
-from odoo import models, fields, api, _
+from odoo import _, api, fields, models
+from odoo.tools.safe_eval import safe_eval as eval
 
 
 class LabelPrint(models.Model):
     _name = "label.print"
+
+    _description = 'Label Print'
 
     name = fields.Char("Name", size=64, required=True, index=True)
     model_id = fields.Many2one('ir.model', 'Model', required=True, index=True)
@@ -17,10 +18,6 @@ class LabelPrint(models.Model):
                                         help="""Sidebar action to make this
                                         template available on records
                                         of the related document model""")
-    ref_ir_value = fields.Many2one('ir.values', 'Sidebar button',
-                                   readonly=True,
-                                   help="Sidebar button to open the \
-                                   sidebar action")
     model_list = fields.Char('Model List', size=256)
 
     @api.onchange('model_id')
@@ -54,18 +51,11 @@ class LabelPrint(models.Model):
                 'context': "{'label_print' : %d}" % (data.id),
                 'view_mode': 'form,tree',
                 'target': 'new',
-            })
-            id_temp = vals['ref_ir_act_report'].id
-            vals['ref_ir_value'] = self.env['ir.values'].create({
-                'name': button_name,
-                'model': src_obj,
-                'key2': 'client_action_multi',
-                'value': "ir.actions.act_window," + str(id_temp),
-                'object': True,
+                'binding_model_id': data.model_id.id,
+                'binding_type': 'action'
             })
         self.write({
             'ref_ir_act_report': vals.get('ref_ir_act_report', False).id,
-            'ref_ir_value': vals.get('ref_ir_value', False).id,
         })
         return True
 
@@ -74,8 +64,6 @@ class LabelPrint(models.Model):
         for template in self:
             if template.ref_ir_act_report.id:
                 template.ref_ir_act_report.unlink()
-            if template.ref_ir_value.id:
-                template.ref_ir_value.unlink()
         return True
 
 
@@ -105,8 +93,9 @@ class IrModelFields(models.Model):
 
     @api.model
     def name_search(self, name='', args=None, operator='ilike', limit=None):
-        data = self._context['model_list']
-        args.append(('model', 'in', eval(data)))
+        data = self._context.get('model_list')
+        if data:
+            args.append(('model', 'in', eval(data)))
         ret_vat = super(IrModelFields, self).name_search(name=name,
                                                          args=args,
                                                          operator=operator,

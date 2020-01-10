@@ -1,29 +1,16 @@
-# -*- coding: utf-8 -*-
-##############################################################################
-#    OpenERP, Open Source Management Solution
-#    Copyright (C) 2011 Serpent Consulting Services (<http://serpentcs.com>).
-#
-#    This program is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU Affero General Public License as
-#    published by the Free Software Foundation, either version 3 of the
-#    License, or (at your option) any later version.
-#
-#    This program is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU Affero General Public License for more details.
-#
-#    You should have received a copy of the GNU Affero General Public License
-#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-#
-#############################################################################
+# See LICENSE file for full copyright and licensing details.
 
 from datetime import datetime
+<<<<<<< HEAD
 
 from odoo import api, fields, models
 from odoo.tools.translate import _
+=======
+from odoo import api, fields, models
+>>>>>>> upstream/12.0
 from odoo.exceptions import ValidationError
-from openerp.tools import DEFAULT_SERVER_DATE_FORMAT
+from odoo.tools.translate import _
+from odoo.tools import DEFAULT_SERVER_DATE_FORMAT
 
 
 class Employee(models.Model):
@@ -59,6 +46,7 @@ class Employee(models.Model):
         for rec in self:
             rec.no_of_lang = len(rec.lang_ids.ids)
 
+<<<<<<< HEAD
     medical_ids = fields.One2many('hr.employee.medical.details', 'employee_id',
                                   'Medical Ref.')
     no_of_medical = fields.Integer('No of Medical Detials',
@@ -88,6 +76,35 @@ class Employee(models.Model):
                                'Language Ref.')
     no_of_lang = fields.Integer('No of Language',
                                 compute='_compute_no_of_lang', readonly=True)
+=======
+    medical_ids = fields.One2many(
+        'hr.employee.medical.details', 'employee_id', 'Medical Ref.')
+    no_of_medical = fields.Integer(
+        'No of Medical Detials', compute='_compute_no_of_medical',
+        readonly=True)
+    prev_occu_ids = fields.One2many(
+        'employee.previous.occupation', 'employee_id', 'Prev. Occupation Ref.')
+    no_of_prev_occu = fields.Integer(
+        'No of Prev. Occupation', compute='_compute_no_of_prev_occu',
+        readonly=True)
+    relative_ids = fields.One2many(
+        'employee.relative', 'employee_id', 'Relative Ref.')
+    no_of_relative = fields.Integer(
+        'No of Relative', compute='_compute_no_of_relative', readonly=True)
+    education_ids = fields.One2many(
+        'employee.education', 'employee_id', 'Education Ref.')
+    no_of_education = fields.Integer(
+        'No of Education', compute='_compute_no_of_education', readonly=True)
+    prev_travel_ids = fields.One2many(
+        'employee.previous.travel', 'employee_id', 'Previous Travel Ref.')
+    no_of_prev_travel = fields.Integer(
+        'No of Previous Travel', compute='_compute_no_of_prev_travel',
+        readonly=True)
+    lang_ids = fields.One2many(
+        'employee.language', 'employee_id', 'Language Ref.')
+    no_of_lang = fields.Integer(
+        'No of Language', compute='_compute_no_of_lang', readonly=True)
+>>>>>>> upstream/12.0
 
 
 class EmployeeMedicalDetails(models.Model):
@@ -98,6 +115,7 @@ class EmployeeMedicalDetails(models.Model):
 
     medical_examination = fields.Char('Medical Examination')
     vital_sign = fields.Char('Vital sign')
+<<<<<<< HEAD
     date = fields.Date('Date', default=fields.Date.context_today,
                        readonly=True)
     doc_comment = fields.Char('Doctor’s Comments')
@@ -130,6 +148,39 @@ class EmployeeMedicalDetails(models.Model):
     urine_drug_serene = fields.Selection([('Negative', 'Negetive'),
                                           ('Positive', 'Positive')],
                                          'Urine Drug Serene')
+=======
+    date = fields.Date(
+        'Date', default=fields.Date.context_today, readonly=True)
+    doc_comment = fields.Char('Doctor’s Comments')
+
+    head_face_scalp = fields.Selection(
+        [('Abnormal', 'Abnormal'), ('Normal', 'Normal')], 'Head, Face, Scalp')
+    nose_sinuses = fields.Selection(
+        [('Abnormal', 'Abnormal'), ('Normal', 'Normal')], 'Nose/Sinuses')
+    mouth_throat = fields.Selection(
+        [('Abnormal', 'Abnormal'), ('Normal', 'Normal')], 'Mouth/Throat')
+    ears_tms = fields.Selection(
+        [('Abnormal', 'Abnormal'), ('Normal', 'Normal')], 'Ears/TMs')
+    eyes_pupils_ocular = fields.Selection(
+        [('Abnormal', 'Abnormal'), ('Normal', 'Normal')],
+        'Eyes/Pupils/Ocular Motility')
+    heart_vascular_system = fields.Selection(
+        [('Abnormal', 'Abnormal'), ('Normal', 'Normal')],
+        'Heart/Vascular System')
+    lungs = fields.Selection(
+        [('Abnormal', 'Abnormal'), ('Normal', 'Normal')], 'Lungs')
+    abdomen_hernia = fields.Selection(
+        [('Abnormal', 'Abnormal'), ('Normal', 'Normal')], 'Abdomen/Hernia')
+    msk_strengh = fields.Selection(
+        [('Abnormal', 'Abnormal'), ('Normal', 'Normal')], 'MSK-Strength')
+    neurological = fields.Selection(
+        [('Abnormal', 'Abnormal'), ('Normal', 'Normal')],
+        'Neurological (Reflexes, Sensation)')
+    glasses_needed = fields.Boolean('Glasses Needed?')
+    urine_drug_serene = fields.Selection(
+        [('Negative', 'Negetive'), ('Positive', 'Positive')],
+        'Urine Drug Serene')
+>>>>>>> upstream/12.0
     fit_for_full_duty = fields.Boolean('Fully Fit for Duty?')
 
     good_health = fields.Boolean('Good Health?')
@@ -141,11 +192,19 @@ class EmployeeMedicalDetails(models.Model):
     epilepsy = fields.Boolean('Epilepsy')
     history_drug_use = fields.Boolean('Any History of drug use?')
 
+<<<<<<< HEAD
     employee_id = fields.Many2one('hr.employee', 'Employee Ref',
                                   ondelete='cascade')
     active = fields.Boolean(string='Active', default=True)
     blood_name = fields.Selection([('A', 'A'), ('B', 'B'), ('O', 'O'),
                                    ('AB', 'AB')], "Blood Type")
+=======
+    employee_id = fields.Many2one(
+        'hr.employee', 'Employee Ref', ondelete='cascade')
+    active = fields.Boolean(string='Active', default=True)
+    blood_name = fields.Selection(
+        [('A', 'A'), ('B', 'B'), ('O', 'O'), ('AB', 'AB')], "Blood Type")
+>>>>>>> upstream/12.0
     blood_type = fields.Selection([('+', '+'), ('-', '-')], 'Blood Type')
 
     @api.model
@@ -171,8 +230,13 @@ class EmployeePreviousOccupation(models.Model):
     ref_position = fields.Char(string='Reference Position')
     ref_phone = fields.Char(string='Reference Phone')
     active = fields.Boolean(string='Active', default=True)
+<<<<<<< HEAD
     employee_id = fields.Many2one('hr.employee', 'Employee Ref',
                                   ondelete='cascade')
+=======
+    employee_id = fields.Many2one(
+        'hr.employee', 'Employee Ref', ondelete='cascade')
+>>>>>>> upstream/12.0
     email = fields.Char('Email')
 
     @api.model
@@ -195,14 +259,20 @@ class EmployeeRelative(models.Model):
                                       ('Father', 'Father'),
                                       ('Husband', 'Husband'),
                                       ('Mother', 'Mother'),
+<<<<<<< HEAD
                                       ('Sister', 'Sister'), ('Son', 'Son'),
                                       ('Uncle', 'Uncle'),
+=======
+                                      ('Sister', 'Sister'),
+                                      ('Son', 'Son'), ('Uncle', 'Uncle'),
+>>>>>>> upstream/12.0
                                       ('Wife', 'Wife'), ('Other', 'Other')],
                                      string='Relative Type', required=True)
     name = fields.Char(string='Name', size=128, required=True)
     birthday = fields.Date(string='Date of Birth')
     place_of_birth = fields.Char(string='Place of Birth', size=128)
     occupation = fields.Char(string='Occupation', size=128)
+<<<<<<< HEAD
     gender = fields.Selection([('Male', 'Male'), ('Female', 'Female')],
                               string='Gender', required=False)
     active = fields.Boolean(string='Active', default=True)
@@ -216,22 +286,49 @@ class EmployeeRelative(models.Model):
                               DEFAULT_SERVER_DATE_FORMAT) >= datetime.today():
             warning = {'title': _('User Alert !'),
                        'message': _('Date of Birth must be less than today!')}
+=======
+    gender = fields.Selection(
+        [('Male', 'Male'), ('Female', 'Female')], string='Gender',
+        required=False)
+    active = fields.Boolean(string='Active', default=True)
+    employee_id = fields.Many2one(
+        'hr.employee', 'Employee Ref', ondelete='cascade')
+
+    @api.onchange('birthday')
+    def onchange_birthday(self):
+        if self.birthday and datetime.strptime(
+                self.birthday, DEFAULT_SERVER_DATE_FORMAT) >= datetime.today():
+            warning = {'title': _('User Alert !'), 'message': _(
+                'Date of Birth must be less than today!')}
+>>>>>>> upstream/12.0
             self.birthday = False
             return {'warning': warning}
 
     @api.onchange('relative_type')
     def onchange_relative_type(self):
         if self.relative_type:
+<<<<<<< HEAD
             if self.relative_type in ('Brother', 'Father', 'Husband',
                                       'Son', 'Uncle'):
+=======
+            if self.relative_type in ('Brother', 'Father', 'Husband', 'Son',
+                                      'Uncle'):
+>>>>>>> upstream/12.0
                 self.gender = 'Male'
             elif self.relative_type in ('Mother', 'Sister', 'Wife', 'Aunty'):
                 self.gender = 'Female'
             else:
                 self.gender = ''
         if self.employee_id and not self.relative_type:
+<<<<<<< HEAD
             warning = {'title': _('Warning!'),
                        'message': _('Please select Relative Type!'), }
+=======
+            warning = {
+                'title': _('Warning!'),
+                'message': _('Please select Relative Type!'),
+            }
+>>>>>>> upstream/12.0
             return {'gender': False, 'warning': warning}
 
     @api.model
@@ -256,10 +353,18 @@ class EmployeeEducation(models.Model):
     field = fields.Char(string='Major/Field of Education', size=128)
     illiterate = fields.Boolean('Illiterate')
     active = fields.Boolean(string='Active', default=True)
+<<<<<<< HEAD
     employee_id = fields.Many2one('hr.employee', 'Employee Ref',
                                   ondelete='cascade')
     edu_type = fields.Selection([('Local', 'Local'), ('Abroad', 'Abroad')],
                                 'School Location', default="Local")
+=======
+    employee_id = fields.Many2one(
+        'hr.employee', 'Employee Ref', ondelete='cascade')
+    edu_type = fields.Selection(
+        [('Local', 'Local'), ('Abroad', 'Abroad')], 'School Location',
+        default="Local")
+>>>>>>> upstream/12.0
     country_id = fields.Many2one('res.country', 'Country')
     state_id = fields.Many2one('res.country.state', 'State')
     province = fields.Char("Province")
@@ -296,6 +401,7 @@ class EmployeeEducation(models.Model):
 
     @api.onchange('from_date', 'to_date')
     def onchange_date(self):
+<<<<<<< HEAD
         if self.to_date and \
             datetime.strptime(self.to_date,
                               DEFAULT_SERVER_DATE_FORMAT) >= datetime.today():
@@ -307,6 +413,20 @@ class EmployeeEducation(models.Model):
             warning = {'title': _('User Alert !'),
                        'message': _('To Date %s must be greater \
                        than From Date %s !') % (self.to_date, self.from_date)}
+=======
+        to_date = self.to_date and datetime.strftime(
+                self.to_date, DEFAULT_SERVER_DATE_FORMAT)           
+        if to_date and datetime.strptime(
+                to_date, DEFAULT_SERVER_DATE_FORMAT) >= datetime.today():
+            warning = {'title': _('User Alert !'), 'message': _(
+                'To date must be less than today!')}
+            self.to_date = False
+            return {'warning': warning}
+        if self.from_date and self.to_date and self.from_date > self.to_date:
+            warning = {'title': _('User Alert !'), 'message': _(
+                'To Date %s must be greater than From Date %s !') %
+                (self.to_date, self.from_date)}
+>>>>>>> upstream/12.0
             self.to_date = False
             return {'warning': warning}
 
@@ -322,8 +442,13 @@ class EmployeePreviousTravel(models.Model):
     location = fields.Char(string='Location', size=128, required=True)
     reason = fields.Char('Reason', required=True)
     active = fields.Boolean(string='Active', default=True)
+<<<<<<< HEAD
     employee_id = fields.Many2one('hr.employee', 'Employee Ref',
                                   ondelete='cascade')
+=======
+    employee_id = fields.Many2one(
+        'hr.employee', 'Employee Ref', ondelete='cascade')
+>>>>>>> upstream/12.0
 
     @api.model
     def create(self, vals):
@@ -334,6 +459,7 @@ class EmployeePreviousTravel(models.Model):
 
     @api.onchange('from_date', 'to_date')
     def onchange_date(self):
+<<<<<<< HEAD
         if self.to_date and \
             datetime.strptime(self.to_date,
                               DEFAULT_SERVER_DATE_FORMAT) >= datetime.today():
@@ -345,6 +471,18 @@ class EmployeePreviousTravel(models.Model):
             warning = {'title': _('User Alert !'),
                        'message': _('To Date %s must be greater than \
                        From Date %s !') % (self.to_date, self.from_date)}
+=======
+        if self.to_date and datetime.strptime(
+                self.to_date, DEFAULT_SERVER_DATE_FORMAT) >= datetime.today():
+            warning = {'title': _('User Alert !'), 'message': _(
+                'To date must be less than today !')}
+            self.to_date = False
+            return {'warning': warning}
+        if self.from_date and self.to_date and self.from_date > self.to_date:
+            warning = {'title': _('User Alert !'), 'message': _(
+                'To Date %s must be greater than From Date %s !') %
+                (self.to_date, self.from_date)}
+>>>>>>> upstream/12.0
             self.to_date = False
             return {'warning': warning}
 
@@ -356,6 +494,7 @@ class EmployeeLanguage(models.Model):
     _order = "id desc"
 
     language = fields.Char('Language', required=True)
+<<<<<<< HEAD
     read_lang = fields.Selection([('Excellent', 'Excellent'),
                                   ('Good', 'Good'), ('Poor', 'Poor')],
                                  string='Read')
@@ -368,11 +507,27 @@ class EmployeeLanguage(models.Model):
     active = fields.Boolean(string='Active', default=True)
     employee_id = fields.Many2one('hr.employee', 'Employee Ref',
                                   ondelete='cascade')
+=======
+    read_lang = fields.Selection(
+        [('Excellent', 'Excellent'), ('Good', 'Good'), ('Poor', 'Poor')],
+        string='Read')
+    write_lang = fields.Selection(
+        [('Excellent', 'Excellent'), ('Good', 'Good'), ('Poor', 'Poor')],
+        string='Write')
+    speak_lang = fields.Selection(
+        [('Excellent', 'Excellent'), ('Good', 'Good'), ('Poor', 'Poor')],
+        string='Speak')
+    active = fields.Boolean(string='Active', default=True)
+    employee_id = fields.Many2one(
+        'hr.employee', 'Employee Ref', ondelete='cascade')
+>>>>>>> upstream/12.0
     mother_tongue = fields.Boolean('Mother Tongue')
 
     @api.constrains('mother_tongue')
     def _check_mother_tongue(self):
+        self.ensure_one()
         if self.mother_tongue and self.employee_id:
+<<<<<<< HEAD
             language_rec = self.search([('employee_id', '=',
                                          self.employee_id.id),
                                         ('mother_tongue', '=', True),
@@ -382,6 +537,17 @@ class EmployeeLanguage(models.Model):
                             tongue, first you have to uncheck mother tongue \
                             in '%s' language.") % (self.language,
                                                    language_rec.language))
+=======
+            language_rec = self.search([
+                ('employee_id', '=', self.employee_id.id),
+                ('mother_tongue', '=', True), ('id', '!=', self.id)],
+                limit=1)
+            if language_rec:
+                raise ValidationError(_("If you want to set '%s' \
+                    as a mother tongue, first you have to uncheck mother \
+                    tongue in '%s' language.") % (
+                    self.language, language_rec.language))
+>>>>>>> upstream/12.0
 
     @api.model
     def create(self, vals):

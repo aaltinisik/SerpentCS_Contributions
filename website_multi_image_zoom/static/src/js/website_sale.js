@@ -3,12 +3,12 @@ odoo.define('website_multi_image_zoom.website_sale', function(require) {
     var ajax = require('web.ajax');
     $(document).ready(function() {
         $('.oe_website_sale').each(function() {
-            var demo = '<div class="xzoom-container"><img class="xzoom" id="xzoom-default" xoriginal="' + $('#ex1').find('img').attr("src") + '" style="width: 300px; height: 350px;" src="' + $('#ex1').find('img').attr("src") + '"/></div>';
+            var demo = '<div class="xzoom-container"><img class="xzoom" id="xzoom-default" xoriginal="' + $('#ex1').find('img').attr("src") + '" src="' + $('#ex1').find('img').attr("src") + '"/></div>';
             $('#ex1 span').html(demo);
             var oe_website_sale = this;
 
             function price_to_str(prices) {
-            	var price = prices;
+                var price = prices;
                 price = Math.round(price * 100) / 100;
                 var dec = Math.round((price % 1) * 100);
                 return price +

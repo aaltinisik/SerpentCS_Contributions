@@ -1,10 +1,9 @@
-# -*- coding: utf-8 -*-
 # See LICENSE file for full copyright and licensing details.
+
 from odoo.tests import common
 
 
 class ProjectProjectTestCase(common.TransactionCase):
-
     def setup(self):
         super(ProjectProjectTestCase, self).setup()
 

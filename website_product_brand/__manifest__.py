@@ -1,5 +1,4 @@
-# -*- coding: utf-8 -*-
-# Part of Odoo. See LICENSE file for full copyright and licensing details.
+# See LICENSE file for full copyright and licensing details.
 
 {
     'name': 'Product Brand Filtering in Website',
@@ -9,7 +8,7 @@
     'website': 'http://www.serpentcs.com',
     'license': 'AGPL-3',
     'summary': 'Product Brand based filters',
-    'version': '10.0.0.0.1',
+    'version': '12.0.0.1.0',
     'depends': ['product_brand', 'website_sale'],
     'data': [
         "security/ir.model.access.csv",
